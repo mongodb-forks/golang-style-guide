@@ -5,4 +5,5 @@
   Uber package predates the new types added in Go 1.19. The new stdlib types provide more or less
   the same functionality as Uber's package.
 - Replaced recommendation to use `golint` with `revive`, as `golint` is long since deprecated.
+- Replaced recommendation to use `goimports` with `gofumpt`.
 
