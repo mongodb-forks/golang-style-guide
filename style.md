@@ -101,7 +101,7 @@ of Go [releases](https://go.dev/doc/devel/release).
 All code should be error-free when run through `revive` and `go vet`. We
 recommend setting up your editor to:
 
-- Run `goimports` on save
+- Run `gofumpt` on save
 - Run `revive` and `go vet` to check for errors
 
 You can find information in editor support for Go tools here:
@@ -4107,7 +4107,7 @@ help to catch the most common issues and also establish a high bar for code
 quality without being unnecessarily prescriptive:
 
 - [errcheck](https://github.com/kisielk/errcheck) to ensure that errors are handled
-- [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports) to format code and manage imports
+- [gofumpt](https://github.com/mvdan/gofumpt) to format code and manage imports
 - [govet](https://pkg.go.dev/cmd/vet) to analyze code for common mistakes
 - [revive](https://github.com/mgechev/revive) to point out common style mistakes
 - [staticcheck](https://staticcheck.dev) to do various static analysis checks
