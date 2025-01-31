@@ -1,14 +1,24 @@
-# Use go.uber.org/atomic
+<!-- This entirely replaces Uber's version of this file, which recommends the use of
+go.uber.org/atomic. That package predates the new types added in Go 1.19. The new stdlib types
+provide more or less the same functionality as Uber's package. -->
 
-Atomic operations with the [sync/atomic] package operate on the raw types
-(`int32`, `int64`, etc.) so it is easy to forget to use the atomic operation to
-read or modify the variables.
+# Use the New Types in sync/atomic
 
-[go.uber.org/atomic] adds type safety to these operations by hiding the
-underlying type. Additionally, it includes a convenient `atomic.Bool` type.
+In the past, the [sync/atomic] package was implemented entirely in terms of functions like
+`atomic.AddInt64`, which were awkward to use and made it easy to accidentally access the underlying
+value non-atomically..
 
-  [go.uber.org/atomic]: https://pkg.go.dev/go.uber.org/atomic
-  [sync/atomic]: https://pkg.go.dev/sync/atomic
+Since Go 1.19, the [sync/atomic] package provides atomic types like `atomic.Bool` and
+`atomic.Int64`, which provide a much safer API for atomic operations, making it impossible to read
+or modify them with a non-atomic operation.
+
+<!--
+
+TODO: It'd be nice to have a shared library that provided a typed atomic value instead of having
+people use `atomic.Value`. We've written such a thing for Mongosync. See
+https://github.com/10gen/mongosync/blob/main/mongo-go/msync/typed_atomic.go for details.
+
+-->
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
@@ -17,7 +27,7 @@ underlying type. Additionally, it includes a convenient `atomic.Bool` type.
 
 ```go
 type foo struct {
-  running int32  // atomic
+  running atomic.Int32  // atomic
 }
 
 func (f* foo) start() {
