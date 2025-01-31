@@ -27,11 +27,11 @@ resources:
 We aim for the code samples to be accurate for the two most recent minor versions
 of Go [releases](https://go.dev/doc/devel/release).
 
-All code should be error-free when run through `golint` and `go vet`. We
+All code should be error-free when run through `revive` and `go vet`. We
 recommend setting up your editor to:
 
 - Run `goimports` on save
-- Run `golint` and `go vet` to check for errors
+- Run `revive` and `go vet` to check for errors
 
 You can find information in editor support for Go tools here:
 <https://go.dev/wiki/IDEsAndTextEditorPlugins>

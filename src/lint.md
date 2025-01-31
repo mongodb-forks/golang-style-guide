@@ -9,14 +9,14 @@ quality without being unnecessarily prescriptive:
 
 - [errcheck] to ensure that errors are handled
 - [goimports] to format code and manage imports
-- [golint] to point out common style mistakes
 - [govet] to analyze code for common mistakes
+- [revive] to point out common style mistakes
 - [staticcheck] to do various static analysis checks
 
   [errcheck]: https://github.com/kisielk/errcheck
   [goimports]: https://pkg.go.dev/golang.org/x/tools/cmd/goimports
-  [golint]: https://github.com/golang/lint
   [govet]: https://pkg.go.dev/cmd/vet
+  [revive]: https://github.com/mgechev/revive
   [staticcheck]: https://staticcheck.dev
 
 ## Lint Runners
