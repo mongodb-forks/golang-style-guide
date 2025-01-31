@@ -25,7 +25,7 @@
     - [Handle Errors Once](#handle-errors-once)
   - [Handle Type Assertion Failures](#handle-type-assertion-failures)
   - [Don't Panic](#dont-panic)
-  - [Use the New Types in sync/atomic](#use-the-new-types-in-syncatomic)
+  - [Use the New Types in sync/atomic](#use-the-new-types-in-syncatomic-1)
   - [Avoid Mutable Globals](#avoid-mutable-globals)
   - [Avoid Embedding Types in Public Structs](#avoid-embedding-types-in-public-structs)
   - [Avoid Using Built-In Names](#avoid-using-built-in-names)
@@ -98,9 +98,12 @@ resources:
 We aim for the code samples to be accurate for the two most recent minor versions
 of Go [releases](https://go.dev/doc/devel/release).
 
+You should set up your editor to integrate with Go's LSP server, [gopls](https://github.com/golang/tools/tree/master/gopls).
+
 All code should be error-free when run through `revive` and `go vet`. We
 recommend setting up your editor to:
 
+- Use `gopls` to update your code's imports automatically on save
 - Run `gofumpt` on save
 - Run `revive` and `go vet` to check for errors
 
@@ -1252,6 +1255,12 @@ if err != nil {
 </tbody></table>
 
 ### Use the New Types in sync/atomic
+
+<!-- This entirely replaces Uber's version of this file, which recommends the use of
+go.uber.org/atomic. That package predates the new types added in Go 1.19. The new stdlib types
+provide more or less the same functionality as Uber's package. -->
+
+#### Use the New Types in sync/atomic
 
 In the past, the [sync/atomic] package was implemented entirely in terms of functions like
 `atomic.AddInt64`, which were awkward to use and made it easy to accidentally access the underlying
@@ -2586,7 +2595,7 @@ There should be two import groups:
 - Standard library
 - Everything else
 
-This is the grouping applied by goimports by default.
+This is the grouping applied by gopls by default.
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
