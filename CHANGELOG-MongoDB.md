@@ -6,4 +6,5 @@
   the same functionality as Uber's package.
 - Replaced recommendation to use `golint` with `revive`, as `golint` is long since deprecated.
 - Replaced recommendation to use `goimports` with `gofumpt`.
-
+- Added a recommendation to use `gopls` in general, and specifically to configure your editor to use
+  it to update imports.

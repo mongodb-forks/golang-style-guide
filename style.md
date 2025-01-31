@@ -98,9 +98,12 @@ resources:
 We aim for the code samples to be accurate for the two most recent minor versions
 of Go [releases](https://go.dev/doc/devel/release).
 
+You should set up your editor to integrate with Go's LSP server, [gopls](https://github.com/golang/tools/tree/master/gopls).
+
 All code should be error-free when run through `revive` and `go vet`. We
 recommend setting up your editor to:
 
+- Use `gopls` to update your code's imports automatically on save
 - Run `gofumpt` on save
 - Run `revive` and `go vet` to check for errors
 
@@ -2579,7 +2582,7 @@ There should be two import groups:
 - Standard library
 - Everything else
 
-This is the grouping applied by goimports by default.
+This is the grouping applied by gopls by default.
 
 <table>
 <thead><tr><th>Bad</th><th>Good</th></tr></thead>
