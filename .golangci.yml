@@ -9,8 +9,8 @@ linters:
   enable:
     - errcheck
     - goimports
-    - golint
     - govet
+    - revive
     - staticcheck
 
 issues:

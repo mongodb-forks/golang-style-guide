@@ -98,11 +98,11 @@ resources:
 We aim for the code samples to be accurate for the two most recent minor versions
 of Go [releases](https://go.dev/doc/devel/release).
 
-All code should be error-free when run through `golint` and `go vet`. We
+All code should be error-free when run through `revive` and `go vet`. We
 recommend setting up your editor to:
 
 - Run `goimports` on save
-- Run `golint` and `go vet` to check for errors
+- Run `revive` and `go vet` to check for errors
 
 You can find information in editor support for Go tools here:
 https://go.dev/wiki/IDEsAndTextEditorPlugins
@@ -4101,8 +4101,8 @@ quality without being unnecessarily prescriptive:
 
 - [errcheck](https://github.com/kisielk/errcheck) to ensure that errors are handled
 - [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports) to format code and manage imports
-- [golint](https://github.com/golang/lint) to point out common style mistakes
 - [govet](https://pkg.go.dev/cmd/vet) to analyze code for common mistakes
+- [revive](https://github.com/mgechev/revive) to point out common style mistakes
 - [staticcheck](https://staticcheck.dev) to do various static analysis checks
 
 ### Lint Runners
