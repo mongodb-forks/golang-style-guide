@@ -38,6 +38,16 @@ recommend setting up your editor to:
 - Run `gofumpt` on save
 - Run `revive` and `go vet` to check for errors
 
+<!-- BEGIN MongoDB addition -->
+
+Note that you may wish to use [golangci-lint] or Bazel's [nogo] to run `gofumpt`, `revive`, and `go
+vet` instead of running each one separately.
+
+  [golangci-lint]: https://golangci-lint.run/
+  [nogo]: https://github.com/bazel-contrib/rules_go/blob/master/go/nogo.rst
+
+<!-- END MongoDB addition -->
+
 You can find information in editor support for Go tools here:
 <https://go.dev/wiki/IDEsAndTextEditorPlugins>
 

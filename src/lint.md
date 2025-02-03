@@ -21,7 +21,10 @@ quality without being unnecessarily prescriptive:
 
 ## Lint Runners
 
-We recommend [golangci-lint] as the go-to lint runner for Go code, largely due
+For projects which use Bazel, you should use [nogo] instead of [golangci-lint], as [golangci-lint]
+does not work well with Bazel's sandboxing.
+
+Otherwise, we recommend [golangci-lint] as the go-to lint runner for Go code, largely due
 to its performance in larger codebases and ability to configure and use many
 canonical linters at once. This repo has an example [.golangci.yml] config file
 with recommended linters and settings.
@@ -30,6 +33,7 @@ golangci-lint has [various linters] available for use. The above linters are
 recommended as a base set, and we encourage teams to add any additional linters
 that make sense for their projects.
 
+  [nogo]: https://github.com/bazel-contrib/rules_go/blob/master/go/nogo.rst
   [golangci-lint]: https://github.com/golangci/golangci-lint
   [.golangci.yml]: https://github.com/uber-go/guide/blob/master/.golangci.yml
   [various linters]: https://golangci-lint.run/usage/linters/
