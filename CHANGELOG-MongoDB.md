@@ -7,3 +7,4 @@
 - Added a recommendation to use `gopls` in general, and specifically to configure your editor to use
   it to update imports.
 - Added a recommendation to use `golangci-lint` or `nogo` to `intro.md`.
+- Updated the `CODE_OF_CONDUCT.md` to use the same one we use for the MongoDB Node driver.
