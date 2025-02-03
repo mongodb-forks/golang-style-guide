@@ -107,6 +107,8 @@ recommend setting up your editor to:
 - Run `gofumpt` on save
 - Run `revive` and `go vet` to check for errors
 
+Note that you may wish to use [golangci-lint](https://golangci-lint.run/) or Bazel's [nogo](https://github.com/bazel-contrib/rules_go/blob/master/go/nogo.rst) to run `gofumpt`, `revive`, and `go vet` instead of running each one separately.
+
 You can find information in editor support for Go tools here:
 https://go.dev/wiki/IDEsAndTextEditorPlugins
 
@@ -4110,7 +4112,10 @@ quality without being unnecessarily prescriptive:
 
 ### Lint Runners
 
-We recommend [golangci-lint](https://github.com/golangci/golangci-lint) as the go-to lint runner for Go code, largely due
+For projects which use Bazel, you should use [nogo](https://github.com/bazel-contrib/rules_go/blob/master/go/nogo.rst) instead of [golangci-lint](https://github.com/golangci/golangci-lint), as [golangci-lint](https://github.com/golangci/golangci-lint)
+does not work well with Bazel's sandboxing.
+
+Otherwise, we recommend [golangci-lint](https://github.com/golangci/golangci-lint) as the go-to lint runner for Go code, largely due
 to its performance in larger codebases and ability to configure and use many
 canonical linters at once. This repo has an example [.golangci.yml](https://github.com/uber-go/guide/blob/master/.golangci.yml) config file
 with recommended linters and settings.

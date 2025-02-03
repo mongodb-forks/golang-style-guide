@@ -9,3 +9,4 @@
   intro to use `gofumpt` instead.
 - Added a recommendation to use `gopls` in general, and specifically to configure your editor to use
   it to update imports.
+- Added recommendations to use `golangci-lint` or `nogo` for linting orchestration.
