@@ -48,8 +48,14 @@ linters-settings:
         files:
           - "**/*.go"
         deny:
-          pkg: "github.com/some/package"
-          desc: "Don't use some/package. It's got issues."
+          - pkg: "golang.org/x/crypto/pbkdf2"
+            desc: "Use the stdlib crypto/pbkdf2 package instead."
+          - pkg: "golang.org/x/crypto/hkdf"
+            desc: "Use the stdlib crypto/hkdf package instead."
+          - pkg: "golang.org/x/crypto/sha3"
+            desc: "Use the stdlib crypto/sha3 package instead."
+          - pkg: "github.com/FiloSottile/mlkem768"
+            desc: "Use the stdlib crypto/mlkem package instead."
 
   errcheck:
     check-type-assertions: true
