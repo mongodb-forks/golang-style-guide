@@ -10,3 +10,4 @@
 - Added a recommendation to use `gopls` in general, and specifically to configure your editor to use
   it to update imports.
 - Added recommendations to use `golangci-lint` or `nogo` for linting orchestration.
+- Added recommendations for many more linters on top of the recommended minimal linting config.

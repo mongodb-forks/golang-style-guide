@@ -1,0 +1,188 @@
+linters:
+  disable-all: true
+  enable:
+    - copyloopvar
+    - cyclop
+    - depguard
+    - dupword
+    - errcheck
+    - errname
+    - errorlint
+    - exhaustruct
+    - exptostd
+    - funlen
+    - gci
+    - gocheckcompilerdirectives
+    - gocognit
+    - gocritic
+    - godot
+    - goimports
+    - govet
+    - iface
+    - importas
+    - ineffassign
+    - intrange
+    - maintidx
+    - misspell
+    - nestif
+    - nilnesserr
+    - nolintlint
+    - predeclared
+    - recvcheck
+    - revive
+    - staticcheck
+    - testifylint
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - usetesting
+  fast: false
+
+linters-settings:
+  depguard:
+    rules:
+      # This is just an example of a rule you could create, though 
+      use-stdlib-crypto:
+        list-mode: Lax
+        files:
+          - "**/*.go"
+        deny:
+          - pkg: "golang.org/x/crypto/pbkdf2"
+            desc: "Use the stdlib crypto/pbkdf2 package instead."
+          - pkg: "golang.org/x/crypto/hkdf"
+            desc: "Use the stdlib crypto/hkdf package instead."
+          - pkg: "golang.org/x/crypto/sha3"
+            desc: "Use the stdlib crypto/sha3 package instead."
+          - pkg: "github.com/FiloSottile/mlkem768"
+            desc: "Use the stdlib crypto/mlkem package instead."
+
+  errcheck:
+    check-type-assertions: true
+
+  gci:
+    sections:
+      - standard
+      - default
+
+  # This configure gocritic so that it is _only_ used to run ruleguard. It's default checks include
+  # some that can be a bit annoying, like insisting on using `switch` instead of if/else all over
+  # the place.
+  gocritic:
+    disable-all: true
+    enabled-checks:
+      - ruleguard
+    settings:
+      ruleguard:
+        rules: "${configDir}/gorules/*.go"
+        # This causes a warning when rules cannot be compiled.
+        failOn: dsl
+
+
+  govet:
+    # This is not part of the default checks, but it's useful for finding bugs and generally
+    # confusing code.
+    shadow: true
+
+  importas:
+    no-extra-aliases: true
+    alias:
+      - pkg: github.com/google/uuid
+        alias: guuid
+
+  misspell:
+    locale: US
+    extra-words:
+      - typo: "cancelation"
+        correction: "cancellation"
+      - typo: "cancelations"
+        correction: "cancellations"
+      - typo: "cancelling"
+        correction: "canceling"
+      - typo: "cancelled"
+        correction: "canceled"
+
+  recvcheck:
+    exclusions:
+      # It's normal for `Marshal*` methods to not take a pointer.
+      - "*.MarshalBSON"
+      # We have some structs that are passed around as non-pointers, but `UnmarshalBSON` always
+      # takes a pointer since it's populating the receiver directly.
+      - "*.UnmarshalBSON"
+
+  revive:
+    enable-all-rules: false
+    # revive has a lot of possible rules. This is a bare minimum config. Check out the revive docs
+    # at https://github.com/mgechev/revive for more options.
+    rules:
+      - name: argument-limit
+        arguments: [5]
+      - name: function-result-limit
+        arguments: [3]
+      - name: import-shadowing
+      - name: unused-parameter
+      - name: unused-receiver
+
+  testifylint:
+    enable:
+      - bool-compare
+      - compares
+      - empty
+      - error-is-as
+      - error-nil
+      - expected-actual
+      - float-compare
+      - len
+      - require-error
+      - suite-extra-assert-call
+    require-error:
+      # The default is to insist on require not only for "no error" checks but also for "error is X"
+      # checks, which is weird.
+      fn-pattern: ^NoErrorf?$
+
+  unused:
+    # If a field is written but never read, it's almost certainly not being used. The one exception
+    # (for which we'll add a `nolint` comment) is with fields that exist solely for serialization
+    # (to YAML, BSON, etc.).
+    field-writes-are-uses: false
+    # We want to actually check that exported fields are used.
+    exported-fields-are-used: false
+    # Setting this to false caught some places where we created and wrote to local variables but
+    # never read from them.
+    local-variables-are-used: false
+
+  usetesting:
+    # We _do_ want to use the testing package's versions of these methods. They ensure that we clean
+    # up after ourselves automatically.
+    os-setenv: true
+    os-temp-dir: true
+
+issues:
+  max-same-issues: 0
+
+  # This allows you to write bson.D literals without spelling out each `bson.E` it contains:
+  #
+  #    doc := bson.D{{"_id", 42}, {"color", "green"}}
+  #
+  # As opposed to:
+  #
+  #    doc := bson.D{bson.E{"_id", 42}, bson.E{"color", "green"}}
+  #
+  # This allows allows the same shorter version for the `bson.Binary` and `bson.Timestamp` types.
+  #
+  # The "(bson|primitive)" bit accounts for the package name changes between v1 and v2 of the Golang
+  # driver. You should probably change this to the appropriate package for whichever driver version
+  # your project uses, if you just use one version.
+  exclude:
+    - "composites: .+((bson|primitive).(Binary|E|Timestamp)) struct literal uses unkeyed fields"
+
+  exclude-rules:
+    # We're okay with type assertions panicking in test code and dev tools.
+    - path: _test\.go|_test_suite\.go|cmd/
+      linters:
+        - errcheck
+      # This is the output we see from errcheck for failures to check type assertion results. We are
+      # okay with not checking these in tests, since if the type assertion fails we'll just get a
+      # panic. Failing to check an error from a _function_ gives us output like "Error return value
+      # of `os.Mkdir` is not checked".
+      text: "Error return value is not checked"
