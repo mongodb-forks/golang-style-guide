@@ -43,7 +43,7 @@ linters-settings:
   depguard:
     rules:
       # This is just an example of a rule you could create, though 
-      forbid-some-pacakge:
+      use-stdlib-crypto:
         list-mode: Lax
         files:
           - "**/*.go"
